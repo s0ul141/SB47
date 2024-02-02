@@ -14,6 +14,6 @@ Thank You If u have come this far. :)
 
 ## Contents
     Pyhton <started with basics followed by using of numpy and pandas>
-    Regression Ananlysis <RA Lab>
-    Time Series Ananlysis <TSA Lab>
-    Machine Learning <ML Lab>
+    Regression Ananlysis <RA_Lab>
+    Time Series Ananlysis <TSA_Lab>
+    Machine Learning <ML_Lab>
