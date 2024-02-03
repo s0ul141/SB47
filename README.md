@@ -17,3 +17,4 @@ Thank You If u have come this far. :)
     Regression Ananlysis <RA_Lab>
     Time Series Ananlysis <TSA_Lab>
     Machine Learning <ML_Lab>
+    DBMS <DBMS_Lab>
