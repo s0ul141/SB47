@@ -1,0 +1,101 @@
+\documentclass{article}
+
+\begin{document}
+<<>>=
+
+library(readxl)
+library(BSDA)
+library(dplyr)
+data <- read_excel("C:/Users/kings/OneDrive/Desktop/GIT_HUB/sb47/MarkReport.xlsx")
+data
+cat1 <- data$'Continuous Assessment Test - I'
+cat1
+
+cat2<- (data$'Continuous Assessment Test - II')
+cat2_n <- as.numeric(cat2)
+cat2_n <- replace(cat2_n, is.na(cat2_n),0)
+cat2_n
+@
+
+@
+<<>>=
+#Question 1
+#CAT-I
+#Ho: mu >=32
+#Ha: mu <32
+@
+
+<<>>=
+result <- z.test(cat1,y=NULL,  alternative = "less",mu = 32, sigma.x = sd(cat1), 
+                 conf.level = .95)
+print(result)
+@
+CONCLUSION:-\\
+Based on the Z test results, the Z statistic is -8.4236 and the p-value is less 
+than 2.2e-16. The p-value is significantly less than 0.05, which is the typical 
+threshold for statistical significance. This means that we reject the null 
+hypothesis (that the true mean is greater than or equal to 32) and accept the 
+alternative hypothesis (that the true mean is less than 32).
+
+The 95percent confidence interval for the mean is (NA, 24.23669). However, the lower 
+limit of the confidence interval is not available (NA), which might be due to 
+extreme values in the data or other statistical anomalies.
+
+The sample mean is 22.35294, which is less than 32. This further supports the 
+conclusion that the true mean of the data is less than 32.\\
+--------------------------------------------------------------------------------
+<<>>=
+#Question 2
+#CAT-II
+#Ho: mu >=35
+#Ha: mu <35
+@
+
+<<>>=
+result <- z.test(cat2_n,y=NULL,  alternative = "less",mu = 35, 
+                 sigma.x = sd(cat1), conf.level = .95)
+print(result)
+@
+CONCLUSION:-\\
+Based on the Z test results for cat2, the Z statistic is -3.0304 and 
+the p-value is 0.001221. The p-value is less than 0.05, which is the typical 
+threshold for statistical significance. This means that we reject the null 
+hypothesis (that the true mean is greater than or equal to 35) and accept the 
+alternative hypothesis (that the true mean is less than 35).
+
+The 95percent confidence interval for the mean is (NA, 33.41316). However, 
+the lower limit of the confidence interval is not available (NA), which might 
+be due to extreme values in the data or other statistical anomalies.
+
+The sample mean is 31.52941, which is less than 35. This further supports the 
+conclusion that the true mean of the data is less than 35.\\
+
+--------------------------------------------------------------------------------
+<<>>=
+#Question 3 
+#CAT-II
+#Ho: mu1 = mu2
+#Ha: mu1 != mu2
+@
+
+<<>>=
+result <- z.test(cat1, cat2_n, alternative = "two.sided",mu=0, 
+                 sigma.x = sd(cat1),sigma.y = sd(cat2_n), conf.level = .95)
+print(result)
+@
+CONCLUSION:-\\
+Based on the two-sample Z test results, the Z statistic is -5.312 and the 
+p-value is 1.085e-07. The p-value is significantly less than 0.05, which is the 
+typical threshold for statistical significance. This means that we reject the 
+null hypothesis (that the true difference in means is equal to 0) and accept 
+the alternative hypothesis (that the true difference in means is not equal to 0).
+
+The 95percent confidence interval for the difference in means is 
+(-12.562333, -5.790608). This interval does not contain 0, which further 
+supports the conclusion that the true difference in means is not equal to 0.
+
+The sample means are 22.35294 for cat1 and 31.52941 for cat2. The difference between these two means is consistent with the results of the Z test.
+
+
+
+\end{document}
