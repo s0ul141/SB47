@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\begin{document}
+\textbf{Name: Soumya Basu}\\
+ \textbf{Reg No.: 23MDT0047}
+
+\textbf{QUESTION 1}
+
+It was claimed that 75\% of all dentists recommend a certain brand of gum for their gum-chewing  
+patients. A consumer group doubted this claim and decided to test              
+alternative hypothesis against the, where p is the proportion of dentists who recommend 
+that brand of gum. A survey of 390 dentists found that 273 recommended the given brand of gum.\\ 
+(a) Which hypothesis would you accept if the significance level is alpha = 0.05?\\ 
+(b) Which hypothesis would you accept if the significance level is alpha = 0.01? 
+(c) Find the p-value for this test. 
+<<>>=
+library(BSDA)
+
+# Given information
+n <- 390  # Total number of dentists surveyed
+x <- 273  # Number of dentists who recommended the brand
+p0 <- 0.75  # Claimed proportion
+
+prop_test <- prop.test(x, n, p0, alternative = "two.sided")
+# (a) Hypothesis testing at alpha = 0.05
+if (prop_test$p.value < 0.05) {
+  cat("(a) At alpha = 0.05, we reject the null hypothesis.\n")
+} else {
+  cat("(a) At alpha = 0.05, we fail to reject the null hypothesis.\n")
+}
+
+# (b) Hypothesis testing at alpha = 0.01
+if (prop_test$p.value < 0.01) {
+  cat("(b) At alpha = 0.01, we reject the null hypothesis.\n")
+} else {
+  cat("(b) At alpha = 0.01, we fail to reject the null hypothesis.\n")
+}
+
+# (c) Print the p-value
+cat("(c) The p-value for this test is:", prop_test$p.value, "\n")
+@
+
+\textbf{QUESTION 2}
+A study is undertaken to compare the cure rates of certain lethal disease by drug A and drug B.  
+Among 190 patients who took drug A, 100 were cured, and among 65 patients who took drug B,  
+55  were cured. Do the data provide strong evidence that the cure rate is different between the two  
+drugs? Test the hypothesis at 5\% and 2\% level of significance.\\
+
+<<>>=
+# Given data
+# Number of patients who took drug A 190
+# Number of cures with drug A 100
+# Number of patients who took drug B 65
+# Number of cures with drug B 55
+
+# Two-proportion z-test
+res <- prop.test(x<- c(100, 55),n<- c(190, 65), alternative = "two.sided", 
+                 conf.level = 0.95)
+print(res$p.value)
+
+if (res$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis.")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis.")
+}
+if (res$p.value < 0.02) {
+  print("At 2% level of significance, we reject the null hypothesis.")
+} else {
+  print("At 2% level of significance, we fail to reject the null hypothesis.")
+}
+@
+
+
+\end{document}
