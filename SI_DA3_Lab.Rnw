@@ -1,0 +1,124 @@
+\documentclass{article}
+
+\begin{document}
+\textbf{Name: Soumya Basu}\\
+ \textbf{Reg No.: 23MDT0047}
+
+<<>>=
+library(readxl)
+@
+
+<<>>=
+# Declare the data
+data <- read_excel("C:/Users/kings/OneDrive/Desktop/GIT_HUB/sb47/MarkReport2.xlsx")
+data1 <- subset(data, select = -c(Sl.No))
+data1
+q1 <- data$`Quiz – I`
+q2 <- data$`Quiz – II`
+cat1 <- data$`CAT – I`
+cat2 <- data$`CAT – I I`
+@
+1. Plot the suitable diagram/graph to represent the given dataset
+<<>>=
+boxplot(q1, main = "Boxplot of Scores",xlab="Quiz 1", ylab = "Scores")
+boxplot(q2, main = "Boxplot of Scores",xlab="Quiz 2", ylab = "Scores")
+boxplot(cat1, main = "Boxplot of Scores",xlab="Cat 1", ylab = "Scores")
+boxplot(cat2, main = "Boxplot of Scores",xlab="Cat 2", ylab = "Scores")
+boxplot(data1, main = "Boxplot of Scores", ylab = "Scores")
+@
+\newpage
+
+2. Determine the summary statistics for each variable
+<<>>=
+for (var in names(data1)) {
+  cat("\nSummary statistics for", var, ":\n")
+  print(summary(data1[[var]]))
+  cat("Variance:", var(data1[[var]]), "\n")
+  cat("Standard deviation:", sd(data1[[var]]), "\n")
+
+}
+mode_all <- sapply(data1, function(x) names(which.max(table(x))))
+cat("Quiz1 Quiz2 Cat1 Cat2 \n", mode_all)
+@
+\newpage
+3. Test the hypothesis that the Performance in Quiz test is equal or not
+<<>>=
+cat("\nHypothesis test for Quiz I and Quiz II:\n")
+res1<- t.test(q1, q2)
+if (res1$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis.")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis.")
+}
+@
+\newpage
+4. Performance in CAT-2 is higher compared to CAT-1 assessment
+<<>>=
+cat("\nHypothesis test for CAT I and CAT II:\n")
+res2<-t.test(cat1, cat2, alternative = "less")
+
+if (res2$p.value < 0.05) {
+  cat("At 5% level of significance, we reject the null hypothesis i.e., 
+        CAT-1 is higher compared to CAT-2 assessment.")
+} else {
+  cat("At 5% level of significance, we fail to reject the null hypothesis
+        i.e., CAT-2 is higher compared to CAT-1 assessment.")
+}
+res2$p.value
+@
+\newpage
+5. Whether the sample data is normally distributed
+<<>>=
+f_test_cat <- var.test(cat1, cat2, alternative = 'two.sided', conf.level = 0.95)
+print(f_test_cat$p.value)
+t_test_cat <- t.test(cat1, cat2, alternative = 'two.sided', conf.level = 0.95)
+print(t_test_cat$p.value)
+
+if (t_test_cat$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis i.e., cat1 and cat2 has different mean")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis i.e., cat1 and cat2 has same mean")
+}
+
+if (f_test_cat$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis i.e., cat1 and cat2 has different variance.")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis i.e., cat1 and cat2 has same variance.")
+}
+
+
+f_test_q <- var.test(q1, q2, alternative = 'two.sided', conf.level = 0.95)
+print(f_test_q$p.value)
+t_test_q <- t.test(q1, q2, alternative = 'two.sided', conf.level = 0.95)
+print(t_test_q$p.value)
+
+if (f_test_q$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis i.e., q1 and q2 has different variance.")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis i.e., q1 and q2 has same variance.")
+}
+if (t_test_q$p.value < 0.05) {
+  print("At 5% level of significance, we reject the null hypothesis i.e., q1 and q2 has different mean")
+} else {
+  print("At 5% level of significance, we fail to reject the null hypothesis i.e., q1 and q2 has same mean")
+}
+@
+
+Conclusion
+<<>>=
+if (t_test_cat$p.value <0.05 || f_test_cat$p.value <0.05){
+  print("Cat1 and Cat2 are not normally Distributed")
+}else{
+  print("Cat1 and Cat2 are normally Distributed")
+}
+
+
+if (t_test_q$p.value <0.05 || f_test_q$p.value <0.05){
+  print("Cat1 and Cat2 are not normally Distributed")
+}else{
+  print("Cat1 and Cat2 are normally Distributed")
+}
+@
+
+
+\end{document}
