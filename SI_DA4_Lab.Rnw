@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\begin{document}
+
+\textbf{Name - Soumya Basu}\\
+\textbf{Reg.No - 23MDTO047}\\
+
+Question 1
+
+<<>>=
+data <- matrix(c(15,18,22,25,16,24,15,25,22,14,18,16,27,14,15,14), ncol=4, byrow=TRUE)
+
+data
+
+chisq.test(data)
+
+qchisq(0.99,9)
+qchisq(0.95,9)
+
+@
+
+Conclusion
+since X-squared is less than alpha 1\% and 5\% we accept our null hypothesis i.e., readership is not depend on the level education.
+
+\newpage
+Question 2
+<<>>=
+# Define the midpoints of the intervals
+midy <- c(27, 29, 31, 33, 35, 37, 39)
+
+# Define the observed frequencies
+f <- c(17, 22, 38, 46, 34, 29, 14)
+
+# Calculate the mean and standard deviation
+mean <- sum(f * midy) / sum(f)
+sd <- sqrt(sum(f * (midy - mean)^2) / sum(f))
+
+# Define the boundaries of the intervals
+l <- c(26, 28, 30, 32, 34, 36, 38, 40)
+
+# Calculate the cumulative distribution function (CDF) at the boundaries
+cdf <- pnorm(l, mean, sd)
+
+# Calculate the probability mass function (PMF) for each interval
+pmf <- diff(cdf)
+
+# Calculate the expected frequencies
+ex <- pmf * sum(f)
+# Normalize ex
+ex <- ex / sum(ex)
+
+# Perform the chi-square test
+test <- chisq.test(f, p = ex)
+
+# Print the results
+print(paste("Chi-square statistic:", test$statistic))
+print(paste("P-value:", test$p.value))
+
+# Interpret the results
+if (test$p.value < 0.05) {
+  print("The null hypothesis that the data follows a Normal distribution is rejected
+        at the 5% level of significance.")
+} else {
+  print("The null hypothesis that the data follows a Normal distribution is
+        not rejected at the 5% level of significance.")
+}
+
+@
+
+
+\end{document}
