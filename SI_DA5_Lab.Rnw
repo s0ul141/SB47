@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\begin{document}
+
+\textbf{Name - Soumya Basu}\\
+\textbf{Reg.No - 23MDTO047}\\
+
+Question 1
+
+<<>>=
+make<- c('Acura', 'BMW', 'Buick', 'Chevrolet','Chevrolet', 'Chrysler',
+         'Dodge', 'Dodge', 'Ford', 'Ford', 'Ford', 'Ford', 'Honda', 'Mazada', 
+         'Mercedes', 'Mercury', 'Nissan', 'Oldsmobile', 'Plymouth', 'Pontiac' )
+model <- c('Legend', '735i', 'Regal', 'Cavalier', 'Celebrity', 'Conquest', 
+           'Aries', 'Dynasty', 'Escort', 'Mustang', 'Taurus', 'Tempo', 'Accord', 
+           'Rx-7', '260E','Tracer', 'Maxima', 'Cutlass', 'Laser', 'Grand')
+MPG <- c(30, 19, 29, 32, 30, 24, 30, 28, 31, 25, 27, 33, 30, 23, 24, 29, 26, 29,
+         37, 29)
+Engine_Displacement <- c(97, 209, 173, 121, 151, 156, 135, 181, 114, 302, 153, 
+                         90, 119, 80, 159, 97, 181, 173, 122, 173)
+@
+(a) Scatter Plot
+<<>>=
+scatter.smooth(x=MPG, y= Engine_Displacement, main='MPG ~ Engine_displacement')
+@
+(b) Fitting of Linear Regression Model
+<<>>=
+fit = lm(Engine_Displacement ~ MPG)
+fit
+@
+(c)Test the hypothesis that 
+
+(i)  H0 : p = 0  {Correlation is not there}
+
+     H1 : p != 0 {Correlation is there}
+
+<<>>=
+c_value<-cor(MPG, Engine_Displacement)
+if (c_value == 0){
+  print("We accpet our Null Hypothesis i.e., there is no correlation between MPG and Engine Displacement")
+}else{
+  print("We reject our Null Hypothesis i.e., there is correlation between MPG and Engine Displacement")
+}
+@
+(c)
+(ii)What is the P-value for this test? State the conclusions that result from
+this test.
+
+H0 : B = 0  {The Regression coefficients are zero}
+
+H1 : B != 0 {The Regression coefficients are not zero}
+
+alpha = 5\%
+<<>>=
+summary_fit <- summary(fit)
+
+# Extracting p-values
+p_values <- summary_fit$coefficients[2, "Pr(>|t|)"]
+
+# Print the p-values
+if (p_values> 0.05){
+    print("We accpet our Null Hypothesis i.e., the Regression coefficients are zero")
+}else{
+    print("We reject our Null Hypothesis i.e., the Regression coefficients are not zero")
+}
+@
+\newpage
+Question 2
+<<>>=
+Observation_Number <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 
+                        17, 18, 19, 20)
+Strength_psi <- c(2158.7, 1678.15, 2316, 2061.3, 2207.5, 1708.3, 1784.7, 2575, 
+                  2357.9, 2654.2, 2165.2, 2399.55, 1779.8, 2336.75, 1765.3, 
+                  2053.5, 2414.4, 2200.5, 2277.7, 1753.7)
+Age_weeks <- c(15.5, 23.75, 8, 17, 5, 19, 24, 2.5, 7.5, 11, 13, 3.75, 25, 9.75, 
+               22, 18, 6, 12.5, 2, 21.5)
+@
+(a) Scatter diagram
+<<>>=
+scatter.smooth(x=Age_weeks, y= Strength_psi, main='Age_weeks vs Strength_psi')
+@
+(b)
+<<>>=
+model = lm(Age_weeks ~ Strength_psi)
+model
+@
+(c)Test the hypothesis that 
+
+(i)  H0 : p = 0  {Correlation is not there}
+
+     H1 : p != 0 {Correlation is there}
+<<>>=
+c_value<-cor(Age_weeks, Strength_psi )
+if (c_value == 0){
+  print("We accpet our Null Hypothesis i.e., there is no correlation between Age_weeks and Strength_psi ")
+}else{
+  print("We reject our Null Hypothesis i.e., there is correlation between Age_weeks and Strength_psi")
+}
+@
+(c)
+(ii)What is the P-value for this test? State the conclusions that result from 
+this test.
+
+H0 : B = 0  {The Regression coefficients are zero}
+
+H1 : B != 0 {The Regression coefficients are not zero}
+
+alpha = 5\%
+<<>>=
+summary_model <- summary(model)
+
+# Extracting p-values
+p_values <- summary_model$coefficients[2, "Pr(>|t|)"]
+# Print the p-values
+if (p_values> 0.05){
+    print("We accpet our Null Hypothesis i.e., the Regression coefficients are zero")
+}else{
+    print("We reject our Null Hypothesis i.e., the Regression coefficients are not zero")
+}
+@
+
+\end{document}
